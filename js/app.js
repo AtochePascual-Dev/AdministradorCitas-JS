@@ -30,6 +30,19 @@ class Citas {
   eliminarCita(id) {
     this.citas = this.citas.filter(cita => cita.id !== id);
   };
+
+  editarCita(citaEdit) {
+    this.citas.forEach(cita => {
+      if (cita.id === citaEdit.id) {
+        cita.mascota = citaEdit.mascota;
+        cita.propietario = citaEdit.propietario;
+        cita.telefono = citaEdit.telefono;
+        cita.fecha = citaEdit.fecha;
+        cita.hora = citaEdit.hora;
+        cita.sintomas = citaEdit.sintomas;
+      }
+    });
+  }
 };
 
 
@@ -107,8 +120,16 @@ class UI {
         eliminarCita(id);
       }
 
+      // Boton para editar un cita
+      const bntEditar = document.createElement('button');
+      bntEditar.textContent = 'Editar';
+      bntEditar.classList.add('btn', 'btn-info');
+      bntEditar.onclick = () => {
+        editarCita(cita);
+      }
 
-      divCita.append(mascotaText, propietarioText, telefonoText, fechaText, horaText, sintomasText, bntEliminar);
+
+      divCita.append(mascotaText, propietarioText, telefonoText, fechaText, horaText, sintomasText, bntEliminar, bntEditar);
 
       contenedorCitas.appendChild(divCita);
     });
@@ -164,19 +185,31 @@ const nuevaCita = (event) => {
     return;
   }
 
-  // En caso de pasar la validacion mostramos un mensaje de exito
-  ui.mostrarMensaje('Cita agregada correctamente');
+  // Si el objeto cita tiene un id entonces toca editar cita
+  if (citaObj.id) {
+    administrarCitas.editarCita(citaObj);
+
+    // Mostramos un mensaje de exito
+    ui.mostrarMensaje('Cita editada correctamente');
+
+    // Regresamos el texto del boton
+    document.querySelector('button[type=submit]').textContent = 'Crear Cita';
+  } else {
+    // Si no tiene un id entonces crear una cita
+    // Generamos un id para la cita
+    citaObj.id = Date.now();
+
+    // Agregamos la cita a la lista de citas
+    administrarCitas.agregarCita({ ...citaObj });
+
+    // Mostramos un mensaje de exito
+    ui.mostrarMensaje('Cita agregada correctamente');
+  }
 
   setTimeout(() => {
-    // Eliminamos el mensje de exito
+    // Eliminamos el mensje 
     ui.eliminarMensaje();
-  }, 1000);
-
-  // Generamos un id para la cita
-  citaObj.id = Date.now();
-
-  // Agregamos la cita a la lista de citas
-  administrarCitas.agregarCita({ ...citaObj });
+  }, 2000);
 
   // Reiniciamos la cita
   reiniciarCita();
@@ -218,4 +251,30 @@ const eliminarCita = (id) => {
 
   // Mostramos la nueva lista de citas
   ui.mostrarCitasHtml(administrarCitas);
+};
+
+
+
+// * Edita una cita
+const editarCita = (cita) => {
+  const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
+
+  // LLenamos el formulario con la cita a editar
+  inputMascota.value = mascota;
+  inputProietrio.value = propietario;
+  inputTelefono.value = telefono;
+  inputFecha.value = fecha;
+  inputHora.value = hora;
+  inputSintomas.value = sintomas;
+
+  // LLenamos el objeto de citas con la cita obtenida
+  citaObj.mascota = mascota;
+  citaObj.propietario = propietario;
+  citaObj.telefono = telefono;
+  citaObj.fecha = fecha;
+  citaObj.hora = hora;
+  citaObj.sintomas = sintomas;
+  citaObj.id = id;
+
+  document.querySelector('button[type=submit]').textContent = 'Editar Cita';
 };
