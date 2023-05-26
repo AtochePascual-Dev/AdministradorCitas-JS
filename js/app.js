@@ -22,6 +22,10 @@ class Citas {
   constructor() {
     this.citas = [];
   }
+
+  agregarCita(cita) {
+    this.citas = [...this.citas, cita];
+  }
 };
 
 
@@ -93,4 +97,16 @@ const nuevaCita = (event) => {
     return;
   }
 
+  // En caso de pasar la validacion mostramos un mensaje de exito
+  ui.mostrarMensaje('Cita agregada correctamente');
+
+  setTimeout(() => {
+    // Eliminamos el mensje de exito
+    ui.eliminarMensaje();
+  }, 1000);
+
+  // Generamos un id para la cita
+  citaObj.id = Date.now();
+
+  administrarCitas.agregarCita({ ...citaObj });
 };
