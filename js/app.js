@@ -55,6 +55,48 @@ class UI {
 
     if (existeMensaje) existeMensaje.remove();
   };
+
+
+
+  // * Muestra las citas en pantalla
+  mostrarCitasHtml({ citas }) { //  destructuring dentro del parametro
+    citas.forEach(cita => {
+      const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
+      const divCita = document.createElement('div');
+
+      divCita.classList.add('cita', 'p-3');
+      divCita.dataset.id = id;
+
+      // Scripting
+      const mascotaText = document.createElement('h2');
+      mascotaText.textContent = mascota;
+      mascotaText.classList.add('card-title', 'font-weight-bolder');
+
+      const propietarioText = document.createElement('p');
+      propietarioText.innerHTML = `
+      <span class="font-weight-bolder">Propietario:</span> ${propietario}`;
+
+      const telefonoText = document.createElement('p');
+      telefonoText.innerHTML = `
+      <span class="font-weight-bolder">Telefono:</span> ${telefono}`;
+
+      const fechaText = document.createElement('p');
+      fechaText.innerHTML = `
+      <span class="font-weight-bolder">Fecha:</span> ${fecha}`;
+
+      const horaText = document.createElement('p');
+      horaText.innerHTML = `
+      <span class="font-weight-bolder">Hora:</span> ${hora}`;
+
+      const sintomasText = document.createElement('p');
+      sintomasText.innerHTML = `
+      <span class="font-weight-bolder">Sintomas:</span> ${sintomas}`;
+
+      divCita.append(mascotaText, propietarioText, telefonoText, fechaText, horaText, sintomasText);
+
+      contenedorCitas.appendChild(divCita);
+    });
+  };
 };
 
 const ui = new UI();
@@ -116,6 +158,9 @@ const nuevaCita = (event) => {
 
   // Reiniciamos el formulario
   formulario.reset();
+
+  // Mostramos la lista de citas en pantalla
+  ui.mostrarCitasHtml(administrarCitas);
 };
 
 
