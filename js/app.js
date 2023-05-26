@@ -25,7 +25,22 @@ class Citas {
 };
 
 
-class UI { };
+class UI {
+
+  // * Muestra un mensaje en pantalla
+  mostrarMensaje = (mensaje, exito = true) => {
+    const divMensaje = document.createElement('div');
+
+    divMensaje.innerText = mensaje;
+    divMensaje.classList.add('text-center', 'alert', 'd-block', 'col-12');
+
+    (exito)
+      ? divMensaje.classList.add('alert-success')
+      : divMensaje.classList.add('alert-danger');
+
+    document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('.agregar-cita'));
+  };
+};
 
 const ui = new UI();
 const administrarCitas = new Citas();
@@ -44,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// * FUNCIONES
+// * FUNCIONESmostrarMensaje
 // * Llena nos datos del objeto cita
 const llenarDatosCita = (event) => {
   // Obtenemos los datos de los input
@@ -63,6 +78,7 @@ const nuevaCita = (event) => {
 
   // Validamos si alguno de los valores es vacio
   if (Object.values(citaObj).includes('')) {
+    ui.mostrarMensaje('Todos los campos son obligatorios', false);
     return;
   }
 };
