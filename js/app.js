@@ -60,6 +60,9 @@ class UI {
 
   // * Muestra las citas en pantalla
   mostrarCitasHtml({ citas }) { //  destructuring dentro del parametro
+
+    this.limpiarCitasHtml();
+
     citas.forEach(cita => {
       const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
       const divCita = document.createElement('div');
@@ -96,6 +99,15 @@ class UI {
 
       contenedorCitas.appendChild(divCita);
     });
+  };
+
+
+
+  // * Limpia el listdo de citas en pantalla
+  limpiarCitasHtml() {
+    while (contenedorCitas.firstChild) {
+      contenedorCitas.firstChild.remove();
+    }
   };
 };
 
