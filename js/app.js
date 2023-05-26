@@ -187,7 +187,7 @@ const nuevaCita = (event) => {
 
   // Si el objeto cita tiene un id entonces toca editar cita
   if (citaObj.id) {
-    administrarCitas.editarCita(citaObj);
+    administrarCitas.editarCita({ ...citaObj });
 
     // Mostramos un mensaje de exito
     ui.mostrarMensaje('Cita editada correctamente');
