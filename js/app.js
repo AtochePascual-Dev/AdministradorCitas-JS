@@ -18,10 +18,21 @@ const citaObj = {
 
 
 // * CLASES
+class Citas {
+  constructor() {
+    this.citas = [];
+  }
+};
 
+
+class UI { };
+
+const ui = new UI();
+const administrarCitas = new Citas();
 
 
 // * EVENTOS
+// * Cuando el documento esta listo
 document.addEventListener('DOMContentLoaded', () => {
   inputMascota.addEventListener('input', llenarDatosCita);
   inputProietrio.addEventListener('input', llenarDatosCita);
@@ -29,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   inputFecha.addEventListener('input', llenarDatosCita);
   inputHora.addEventListener('input', llenarDatosCita);
   inputSintomas.addEventListener('input', llenarDatosCita);
+  formulario.addEventListener('submit', nuevaCita);
 });
 
 
@@ -37,9 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
 const llenarDatosCita = (event) => {
   // Obtenemos los datos de los input
   const name = event.target.name;
-  const valor = event.target.value;
+  const valor = event.target.value.trim();
 
   // asignamos el valor al objeto cita segun propiedad
   citaObj[name] = valor;
 };
 
+
+
+// * Valida y agrega una nueva cita a la lista de citas
+const nuevaCita = (event) => {
+  event.preventDefault();
+
+  // Validamos si alguno de los valores es vacio
+  if (Object.values(citaObj).includes('')) {
+    return;
+  }
+};
