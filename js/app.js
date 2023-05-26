@@ -29,16 +29,27 @@ class UI {
 
   // * Muestra un mensaje en pantalla
   mostrarMensaje = (mensaje, exito = true) => {
+    this.eliminarMensaje();
+
     const divMensaje = document.createElement('div');
 
     divMensaje.innerText = mensaje;
-    divMensaje.classList.add('text-center', 'alert', 'd-block', 'col-12');
+    divMensaje.classList.add('text-center', 'alert', 'd-block', 'col-12', 'mensaje');
 
     (exito)
       ? divMensaje.classList.add('alert-success')
       : divMensaje.classList.add('alert-danger');
 
     document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('.agregar-cita'));
+  };
+
+
+
+  // * Elimina un mensaje en pantalla en caso de existir
+  eliminarMensaje = () => {
+    const existeMensaje = document.querySelector('.mensaje');
+
+    if (existeMensaje) existeMensaje.remove();
   };
 };
 
@@ -81,4 +92,5 @@ const nuevaCita = (event) => {
     ui.mostrarMensaje('Todos los campos son obligatorios', false);
     return;
   }
+
 };
