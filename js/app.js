@@ -108,5 +108,25 @@ const nuevaCita = (event) => {
   // Generamos un id para la cita
   citaObj.id = Date.now();
 
+  // Agregamos la cita a la lista de citas
   administrarCitas.agregarCita({ ...citaObj });
+
+  // Reiniciamos la cita
+  reiniciarCita();
+
+  // Reiniciamos el formulario
+  formulario.reset();
+};
+
+
+
+// * Reinicia el objeto de cita
+const reiniciarCita = () => {
+  citaObj.mascota = '';
+  citaObj.propietario = '';
+  citaObj.telefono = '';
+  citaObj.fecha = '';
+  citaObj.hora = '';
+  citaObj.sintomas = '';
+  delete citaObj.id;
 };
